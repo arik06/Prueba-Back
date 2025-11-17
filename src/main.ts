@@ -18,16 +18,27 @@ async function bootstrap(): Promise<void> {
     }),
   );
 
-  // Habilitar CORS
+  
   app.enableCors({
     origin: process.env.CORS_ORIGIN || '*',
     credentials: true,
   });
 
-  // Global prefix
-  app.setGlobalPrefix('api');
+  
+  app.getHttpAdapter().get('/', (req: any, res: any) => {
+    res.send({
+      message: 'API de Tareas está funcionando correctamente',
+      status: 'ok',
+      timestamp: new Date().toISOString(),
+    });
+  });
 
-  // Validation pipe global
+ 
+  app.setGlobalPrefix('api', {
+    exclude: ['/'],
+  });
+
+ 
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -39,7 +50,7 @@ async function bootstrap(): Promise<void> {
     }),
   );
 
-  // Configurar Swagger
+ 
   setupSwagger(app);
 
   const port = process.env.PORT || 3000;

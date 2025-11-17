@@ -4,6 +4,8 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { TasksModule } from './tasks/task.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -13,7 +15,9 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
     }),
     TasksModule,
   ],
+  controllers: [AppController],
   providers: [
+    AppService,
     {
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
