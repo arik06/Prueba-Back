@@ -18,25 +18,14 @@ async function bootstrap(): Promise<void> {
     }),
   );
 
-  
+ 
   app.enableCors({
     origin: process.env.CORS_ORIGIN || '*',
     credentials: true,
   });
 
   
-  app.getHttpAdapter().get('/', (req: any, res: any) => {
-    res.send({
-      message: 'API de Tareas está funcionando correctamente',
-      status: 'ok',
-      timestamp: new Date().toISOString(),
-    });
-  });
-
- 
-  app.setGlobalPrefix('api', {
-    exclude: ['/'],
-  });
+  app.setGlobalPrefix('api');
 
  
   app.useGlobalPipes(
@@ -50,7 +39,7 @@ async function bootstrap(): Promise<void> {
     }),
   );
 
- 
+
   setupSwagger(app);
 
   const port = process.env.PORT || 3000;
